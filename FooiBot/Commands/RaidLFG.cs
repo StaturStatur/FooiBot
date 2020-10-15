@@ -361,6 +361,7 @@ namespace FooiBot.Commands
         }
 
         public int j = 0;
+        public string test;
 
         public void AustragenDi(CommandContext ctx, string Level)
         {
