@@ -5,7 +5,5 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE0059:Unnötige Zuweisung eines Werts.", Justification = "<Ausstehend>", Scope = "member", Target = "~M:FooiBot.Commands.RaidLFG.AustragenDi(DSharpPlus.CommandsNext.CommandContext)")]
-[assembly: SuppressMessage("Style", "IDE0059:Unnötige Zuweisung eines Werts.", Justification = "<Ausstehend>", Scope = "member", Target = "~M:FooiBot.Commands.RaidLFG.AustragenDo(DSharpPlus.CommandsNext.CommandContext)")]
-[assembly: SuppressMessage("Style", "IDE0059:Unnötige Zuweisung eines Werts.", Justification = "<Ausstehend>", Scope = "member", Target = "~M:FooiBot.Commands.RaidLFG.EinschreiberDi(DSharpPlus.CommandsNext.CommandContext)")]
-[assembly: SuppressMessage("Style", "IDE0059:Unnötige Zuweisung eines Werts.", Justification = "<Ausstehend>", Scope = "member", Target = "~M:FooiBot.Commands.RaidLFG.EinschreiberDo(DSharpPlus.CommandsNext.CommandContext)")]
+[assembly: SuppressMessage("Style", "IDE0059:Unnötige Zuweisung eines Werts.", Justification = "<Ausstehend>", Scope = "member", Target = "~M:FooiBot.Commands.RaidLFG.BuilderDi(DSharpPlus.CommandsNext.CommandContext)~System.String")]
+[assembly: SuppressMessage("Style", "IDE0059:Unnötige Zuweisung eines Werts.", Justification = "<Ausstehend>", Scope = "member", Target = "~M:FooiBot.Commands.RaidLFG.BuilderDo(DSharpPlus.CommandsNext.CommandContext)~System.String")]

@@ -12,7 +12,7 @@ namespace FooiBot
         {
             int results;
             //Connect to DB as Di-User
-            var connectionStringDi = @"SERVER = DESKTOP-GBH4PTV\\SQLEXPRESS1; DATABASE = FooiDB; USER ID = RaidDi; PASSWORD = 123";
+            var connectionStringDi = @"SERVER = DESKTOP-GBH4PTV\SQLEXPRESS1; DATABASE = FooiDB; USER ID = RaidDi; PASSWORD = 123";
             SqlConnection sqlConnDi = new SqlConnection(connectionStringDi);
             sqlConnDi.Open();
             //add data
@@ -75,7 +75,7 @@ namespace FooiBot
         {
             int results;
             //Connect to DB as Di-User
-            var connectionStringDo = @"SERVER = DESKTOP-GBH4PTV\\SQLEXPRESS1; DATABASE = FooiDB; USER ID = RaidDo; PASSWORD = 123";
+            var connectionStringDo = @"SERVER = DESKTOP-GBH4PTV\SQLEXPRESS1; DATABASE = FooiDB; USER ID = RaidDo; PASSWORD = 123";
             SqlConnection sqlConnDo = new SqlConnection(connectionStringDo);
             sqlConnDo.Open();
             //add data
@@ -113,12 +113,12 @@ namespace FooiBot
         public static void LeererDi()
         {
             int results;
-            var connectionStringDi = @"SERVER = DESKTOP-GBH4PTV\\SQLEXPRESS1; DATABASE = FooiDB; USER ID = RaidDi; PASSWORD = 123";
+            var connectionStringDi = @"SERVER = DESKTOP-GBH4PTV\SQLEXPRESS1; DATABASE = FooiDB; USER ID = RaidDi; PASSWORD = 123";
             SqlConnection sqlConnDi = new SqlConnection(connectionStringDi);
 
             //Leeren DiExp
             sqlConnDi.Open();
-            SqlCommand cmd = new SqlCommand("DELETE FROM RaidDiExp");
+            SqlCommand cmd = new SqlCommand("DELETE FROM RaidDiExp", sqlConnDi);
             results = cmd.ExecuteNonQuery();
             sqlConnDi.Close();
             if (results > 0)
@@ -160,12 +160,12 @@ namespace FooiBot
         public static void LeererDo()
         {
             int results;
-            var connectionStringDo = @"SERVER = DESKTOP-GBH4PTV\\SQLEXPRESS1; DATABASE = FooiDB; USER ID = RaidDo; PASSWORD = 123";
+            var connectionStringDo = @"SERVER = DESKTOP-GBH4PTV\SQLEXPRESS1; DATABASE = FooiDB; USER ID = RaidDo; PASSWORD = 123";
             SqlConnection sqlConnDo = new SqlConnection(connectionStringDo);
 
             //Leeren DoExp
             sqlConnDo.Open();
-            SqlCommand cmd = new SqlCommand("DELETE FROM RaidDoExp");
+            SqlCommand cmd = new SqlCommand("DELETE FROM RaidDoExp", sqlConnDo);
             results = cmd.ExecuteNonQuery();
             sqlConnDo.Close();
             if (results > 0)
@@ -294,7 +294,7 @@ namespace FooiBot
 
             if (Tag == "Di")
             {
-                var connectionStringDi = @"SERVER = DESKTOP-GBH4PTV\\SQLEXPRESS1; DATABASE = FooiDB; USER ID = RaidDi; PASSWORD = 123";
+                var connectionStringDi = @"SERVER = DESKTOP-GBH4PTV\SQLEXPRESS1; DATABASE = FooiDB; USER ID = RaidDi; PASSWORD = 123";
                 SqlConnection sqlConnDi = new SqlConnection(connectionStringDi);
                 SqlCommand cmd = new SqlCommand("", sqlConnDi);
                 sqlConnDi.Open();
@@ -302,28 +302,28 @@ namespace FooiBot
                 switch (Level)
                 {
                     case "Exp":
-                        cmd.CommandText = "DELETE * FROM RaidDiExp WHERE Name = \"" + ctx.Member.Mention + "\";";
+                        cmd.CommandText = "DELETE FROM RaidDiExp WHERE Name = \'" + ctx.Member.Mention + "\';";
                         results = cmd.ExecuteNonQuery();
                         sqlConnDi.Close();
                         if (results > 0)
                             Console.WriteLine("Austragen Erfolgreich (Exp Di)");
                         break;
                     case "Lvl2":
-                        cmd.CommandText = "DELETE * FROM RaidDiLvl2 WHERE Name = \"" + ctx.Member.Mention + "\";";
+                        cmd.CommandText = "DELETE FROM RaidDiLvl2 WHERE Name = \'" + ctx.Member.Mention + "\';";
                         results = cmd.ExecuteNonQuery();
                         sqlConnDi.Close();
                         if (results > 0)
                             Console.WriteLine("Austragen Erfolgreich (Lvl2 Di)");
                         break;
                     case "Lvl1":
-                        cmd.CommandText = "DELETE * FROM RaidDiLvl1 WHERE Name = \"" + ctx.Member.Mention + "\";";
+                        cmd.CommandText = "DELETE FROM RaidDiLvl1 WHERE Name = \'" + ctx.Member.Mention + "\';";
                         results = cmd.ExecuteNonQuery();
                         sqlConnDi.Close();
                         if (results > 0)
                             Console.WriteLine("Austragen Erfolgreich (Lvl1 Di)");
                         break;
                     case "Lvl0":
-                        cmd.CommandText = "DELETE * FROM RaidDiLvl0 WHERE Name = \"" + ctx.Member.Mention + "\";";
+                        cmd.CommandText = "DELETE FROM RaidDiLvl0 WHERE Name = \'" + ctx.Member.Mention + "\';";
                         results = cmd.ExecuteNonQuery();
                         sqlConnDi.Close();
                         if (results > 0)
@@ -335,7 +335,7 @@ namespace FooiBot
             }
             if(Tag == "Do")
             {
-                var connectionStringDo = @"SERVER = DESKTOP-GBH4PTV\\SQLEXPRESS1; DATABASE = FooiDB; USER ID = RaidDo; PASSWORD = 123";
+                var connectionStringDo = @"SERVER = DESKTOP-GBH4PTV\SQLEXPRESS1; DATABASE = FooiDB; USER ID = RaidDo; PASSWORD = 123";
                 SqlConnection sqlConnDo = new SqlConnection(connectionStringDo);
                 SqlCommand cmd = new SqlCommand("", sqlConnDo);
                 sqlConnDo.Open();
@@ -343,14 +343,14 @@ namespace FooiBot
                 switch (Level)
                 {
                     case "Exp":
-                        cmd.CommandText = "DELETE * FROM RaidDoExp WHERE Name = \"" + ctx.Member.Mention + "\";";
+                        cmd.CommandText = "DELETE FROM RaidDoExp WHERE Name = \'" + ctx.Member.Mention + "\';";
                         results = cmd.ExecuteNonQuery();
                         sqlConnDo.Close();
                         if (results > 0)
                             Console.WriteLine("Austragen Erfolgreich (Exp Do)");
                         break;
                     case "Lvl2":
-                        cmd.CommandText = "DELETE * FROM RaidDoLvl2 WHERE Name = \"" + ctx.Member.Mention + "\";";
+                        cmd.CommandText = "DELETE FROM RaidDoLvl2 WHERE Name = \'" + ctx.Member.Mention + "\';";
                         results = cmd.ExecuteNonQuery();
                         sqlConnDo.Close();
                         if (results > 0)

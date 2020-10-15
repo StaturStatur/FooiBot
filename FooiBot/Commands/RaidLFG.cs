@@ -33,13 +33,17 @@ namespace FooiBot.Commands
             string[,] DiLvl2 = new string[3, 30];
             string[,] DiLvl1 = new string[3, 30];
             string[,] DiLvl0 = new string[3, 30];
-
+            string DiLFGExp = string.Empty;
+            string DiLFGLvl2 = string.Empty;
+            string DiLFGLvl1 = string.Empty;
+            string DiLFGLvl0 = string.Empty;
 
             //neu einschreiben
             if (Anmeldung[1] == "Di")
             {
                 DBOperations.EinschreibenDi(Anmeldung, ctx);
             }
+
             //auslesen
             var Data = DBOperations.AuslesenDi();
             DiExp = Data.Item1;
@@ -47,8 +51,41 @@ namespace FooiBot.Commands
             DiLvl1 = Data.Item3;
             DiLvl0 = Data.Item4;
 
-            //ausgabestrin Builden noch machen
+            DiLFGExp = "**Exp** (" + (ExpDiAnm-1) + "/7 Exp-Anmeldungen) \n\u200B";
+            DiLFGLvl2 = "**Trainee Level 2** (" + (Lvl2DiAnm-1) + "/1 Lvl2-Anmeldungen) \n\u200B";
+            DiLFGLvl1 = "**Trainee Level 2** (" + (Lvl1DiAnm-1) + "/1 Lvl1-Anmeldungen) \n\u200B";
+            DiLFGLvl0 = "**Trainee Level 2** (" + (Lvl0DiAnm-1) + "/1 Lvl0-Anmeldungen) \n\u200B";
 
+            //build Ausgabesting
+            for (int i = 0; i < ExpDiAnm || i < 7; i++)
+                if (DiExp[2, i] == null)
+                    DiLFGExp += " - \n";
+                else
+                    DiLFGExp += Emojichooser(ctx, DiExp[2, i]) + Emojichooser(ctx, DiExp[1, i]) + DiExp[0, i] + "\n";
+            DiLFGExp += "\n\u200B\n\u200B";
+
+            for (int i = 0; i < Lvl2DiAnm || i < 1; i++)
+                if (DiLvl2[2, i] == null)
+                    DiLFGLvl2 += " - \n";
+                else
+                    DiLFGLvl2 += Emojichooser(ctx, DiExp[2, i]) + Emojichooser(ctx, DiExp[1, i]) + DiExp[0, i] + "\n";
+            DiLFGLvl2 += "\n\u200B\n\u200B";
+
+            for (int i = 0; i < Lvl1DiAnm || i < 1; i++)
+                if (DiLvl1[2, i] == null)
+                    DiLFGLvl1 += " - \n";
+                else
+                    DiLFGLvl1 += Emojichooser(ctx, DiExp[2, i]) + Emojichooser(ctx, DiExp[1, i]) + DiExp[0, i] + "\n";
+            DiLFGLvl1 += "\n\u200B\n\u200B";
+
+            for (int i = 0; i < Lvl0DiAnm || i < 1; i++)
+                if (DiLvl0[2, i] == null)
+                    DiLFGLvl0 += " - \n";
+                else
+                    DiLFGLvl0 += Emojichooser(ctx, DiExp[2, i]) + Emojichooser(ctx, DiExp[1, i]) + DiExp[0, i] + "\n";
+            DiLFGLvl0 += "\n\u200B\n\u200B";
+
+            DiLFG = DiLFGExp + DiLFGLvl2 + DiLFGLvl1 + DiLFGLvl0;
             return DiLFG;
         }
 
@@ -57,6 +94,8 @@ namespace FooiBot.Commands
             string DoLFG = string.Empty;
             string[,] DoExp = new string[3, 30];
             string[,] DoLvl2 = new string[3, 30];
+            string DoLFGExp = string.Empty;
+            string DoLFGLvl2 = string.Empty;
 
             //neu einschreiben
             if (Anmeldung[1] == "Do")
@@ -69,7 +108,25 @@ namespace FooiBot.Commands
             DoLvl2 = Data.Item2;
 
             //ausgabestrin Builden noch machen
+            DoLFGExp = "**Exp** (" + (ExpDoAnm-1) + "/8 Exp-Anmeldungen) \n\u200B";
+            DoLFGLvl2 = "**Trainee Level 2** (" + (Lvl2DiAnm-1) + "/2 Lvl2-Anmeldungen) \n\u200B";
 
+            //build Ausgabesting
+            for (int i = 0; i < ExpDoAnm || i < 8; i++)
+                if (DoExp[2, i] == null)
+                    DoLFGExp += " - \n";
+                else
+                    DoLFGExp += Emojichooser(ctx, DoExp[2, i]) + Emojichooser(ctx, DoExp[1, i]) + DoExp[0, i] + "\n";
+            DoLFGExp += "\n\u200B\n\u200B";
+
+            for (int i = 0; i < Lvl2DiAnm || i < 2; i++)
+                if (DoLvl2[2, i] == null)
+                    DoLFGLvl2 += " - \n";
+                else
+                    DoLFGLvl2 += Emojichooser(ctx, DoExp[2, i]) + Emojichooser(ctx, DoExp[1, i]) + DoExp[0, i] + "\n";
+            DoLFGLvl2 += "\n\u200B\n\u200B";
+
+            DoLFG = DoLFGExp + DoLFGLvl2;
             return DoLFG;
         }
 
@@ -145,7 +202,7 @@ namespace FooiBot.Commands
                     return dpsemoji;
                 case "Hybrid":
                     return hybridemoji;
-                case "Healing":
+                case "Heal":
                     return healemoji;
                 case "nix":
                     return questionemoji;
@@ -249,6 +306,7 @@ namespace FooiBot.Commands
                 msg = await ctx.Channel.SendMessageAsync("**Anmeldung Abgebrochen!**").ConfigureAwait(false);
                 await Task.Delay(5000);
                 await msg.DeleteAsync().ConfigureAwait(false);
+                Array.Clear(Anmeldung, 0, Anmeldung.Length);
             }
         }
 
@@ -277,7 +335,7 @@ namespace FooiBot.Commands
 
             var anmeldenemb = new DiscordEmbedBuilder
             {
-                Title = "Anmeldung",
+                Title = "Abmeldung",
                 Color = DiscordColor.Blue
             };
 
@@ -290,7 +348,7 @@ namespace FooiBot.Commands
                 nixemoji + " - Abbrechen\n";
 
             anmeldenemb.AddField("Mögliche Tage:", emojis, false);
-            anmeldenemb.WithFooter("Bitte Reagiere auf den Tag wo du dich anmelden willst");
+            anmeldenemb.WithFooter("Bitte Reagiere auf den Tag wo du dich abmelden willst");
             anmeldenemb.WithTimestamp(ctx.Message.Timestamp);
 
             var msg = await ctx.Channel.SendMessageAsync(embed: anmeldenemb).ConfigureAwait(false);
@@ -358,10 +416,10 @@ namespace FooiBot.Commands
                 await Task.Delay(5000);
                 await msg.DeleteAsync().ConfigureAwait(false);
             }
+            Array.Clear(Anmeldung, 0, Anmeldung.Length);
         }
 
         public int j = 0;
-        public string test;
 
         public void AustragenDi(CommandContext ctx, string Level)
         {
@@ -599,18 +657,19 @@ namespace FooiBot.Commands
                 Color = DiscordColor.Green,
             };
 
-            LFGemb.AddField("Dienstag\n\u200B", BuilderDi(ctx), false);
+            LFGemb.AddField("__Dienstag__\n\u200B", BuilderDi(ctx), false);
             LFGemb.AddField("**\u200B**", "**\u200B\n ----------------------------------------------------- \n\u200B\n\u200B**", false);
-            LFGemb.AddField("Donnerstag\n\u200B", BuilderDo(ctx), false);
+            LFGemb.AddField("__Donnerstag__\n\u200B", BuilderDo(ctx), false);
 
             return LFGemb;
         }
 
         [Command("manuell")]
         [Description("Deletes Old LFG and Creates a New one (with same Players)")]
-        [RequireRoles(RoleCheckMode.Any, "FooiBotMod")]
+        //[RequireRoles(RoleCheckMode.Any, "FooiBotMod")]
         public async Task Manuell(CommandContext ctx)
         {
+            Array.Clear(Anmeldung, 0, Anmeldung.Length);
             await ctx.Message.DeleteAsync().ConfigureAwait(false);
             var msg = await ctx.Channel.GetMessagesAsync(1);
             await ctx.Channel.DeleteMessageAsync(msg[0]);
@@ -620,7 +679,7 @@ namespace FooiBot.Commands
 
         [Command("empty")]
         [Description("Deletes all Players from specified Raid (\"Di\"/\"Do\")")]
-        [RequireRoles(RoleCheckMode.Any, "FooiBotMod")]
+        //[RequireRoles(RoleCheckMode.Any, "FooiBotMod")]
         public async Task Delete(CommandContext ctx,
             [Description("Day on wich all Players are removed from the LFG(\"Di\"/\"Do\")")] string Tag)
         {
@@ -629,9 +688,19 @@ namespace FooiBot.Commands
             await ctx.Channel.DeleteMessageAsync(msg[0]);
 
             if (Tag == "Di")
+            {
                 DBOperations.LeererDi();
+                ExpDiAnm = 1;
+                Lvl2DiAnm = 1;
+                Lvl1DiAnm = 1;
+                Lvl0DiAnm = 1;
+            }
             if (Tag == "Do")
+            {
                 DBOperations.LeererDo();
+                ExpDoAnm = 1;
+                Lvl2DoAnm = 1;
+            }
 
             var lfgemb = LFGBuilder(ctx);
             await ctx.Channel.SendMessageAsync(embed: lfgemb).ConfigureAwait(false);
