@@ -12,6 +12,7 @@ namespace FooiBot.Commands
     {
         [Command("ping")]
         [Description("Returns Pong")]
+        [RequireRoles(RoleCheckMode.All, "FooiBotMod")]
         public async Task Ping(CommandContext ctx)
         {
             var pingstr = ctx.Member.Mention;

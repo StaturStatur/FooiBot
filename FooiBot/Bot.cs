@@ -50,7 +50,7 @@ namespace FooiBot
             Client = new DiscordClient(config);
 
             Client.Ready += OnClientReady;
-            Client.Heartbeated += LFGPoster;
+            Client.Heartbeated += HearthBeatPoster;
 
             Client.UseInteractivity(new InteractivityConfiguration
             {
@@ -77,7 +77,7 @@ namespace FooiBot
         private Task OnClientReady(ReadyEventArgs e)
         {
             //Status machen
-            string[] status = { "I Serve Fooi. I am a Salve of the Micha! " };
+            string[] status = { "I Serve Fooi. I am a Slave of the Micha!" };
             var x = new DiscordActivity(name: status[0], type: ActivityType.Playing);
             Client.UpdateStatusAsync(x);
 
@@ -87,9 +87,11 @@ namespace FooiBot
 
         public int i = 0;
 
-        //nur wöchentlicher poster
-        public async Task LFGPoster(HeartbeatEventArgs e)
+        //regeläßiger poster
+        public async Task HearthBeatPoster(HeartbeatEventArgs e)
         {
+            //di/do reset noch implementiere
+            RaidLFG raidLFG = new RaidLFG();
             var lfgchannel = await Client.GetChannelAsync(763993776246882314).ConfigureAwait(false);
 
             //wöchentlicher reset
@@ -98,91 +100,28 @@ namespace FooiBot
                 dt.ToShortTimeString() == "22:00")
             {
                 //leeren anmeldungen
-                LeerenDi();
+                DBOperations.LeererDi();
 
                 //altes lfg löschen
                 var msg = await lfgchannel.GetMessagesAsync(1).ConfigureAwait(false);
                 await lfgchannel.DeleteMessageAsync(msg[0]).ConfigureAwait(false);
 
-                //neues (halb) leeres LFG bauen und posten
-                var lfgemb = LFGembbuilder();
-                await Client.SendMessageAsync(lfgchannel, null, false, embed: lfgemb);
+                //neues (halb) leeres LFG bauen und posten (aus RaidLFG manuell ausführen)
+                //raidLFG.Manuell(ctx);      
             }
             if (dt.DayOfWeek == DayOfWeek.Thursday &&
                 dt.ToShortTimeString() == "22:00")
             {
                 //leeren anmeldungen
-                LeerenDo();
+                DBOperations.LeererDo();
 
                 //altes lfg löschen
                 var msg = await lfgchannel.GetMessagesAsync(1).ConfigureAwait(false);
                 await lfgchannel.DeleteMessageAsync(msg[0]).ConfigureAwait(false);
 
-                //neues (halb) leeres LFG bauen und posten
-                var lfgemb = LFGembbuilder();
-                await Client.SendMessageAsync(lfgchannel, null, false, embed: lfgemb);
+                //neues (halb) leeres LFG bauen und posten (aus RaidLFG manuell ausführen)
+                //raidLFG.Manuell(ctx); 
             }
-        }
-
-        //leeres lfg machen (für diensatg und donnerstag)
-        public DiscordEmbed LFGembbuilder()
-        {
-            var LFGemb = new DiscordEmbedBuilder
-            {
-                Title = "LFG",
-                Color = DiscordColor.Green,
-            };
-            string emptyline = "\u200B\n";
-
-            string ExpDi = emptyline + "**Exp**\n - \n - \n - \n - \n - \n - \n - \n";
-            string Lvl2Di = emptyline + "**Trainee Lvl2**\n - \n";
-            string Lvl1Di = emptyline + "**Trainee Lvl1**\n - \n";
-            string Lvl0Di = emptyline + "**Trainee Lvl0**\n - \n";
-
-            string Dienstag = ExpDi + Lvl2Di + Lvl1Di + Lvl0Di;
-
-            string ExpDo = emptyline + "**Exp**\n - \n - \n - \n - \n - \n - \n - \n - \n";
-            string Lvl2Do = emptyline + "**Trainee Lvl2**\n - \n - ";
-
-            string Donnerstag = ExpDo + Lvl2Do;
-
-            LFGemb.AddField("**Dienstag**", Dienstag, false);
-            LFGemb.AddField(emptyline, emptyline + "** ----------------------------------------------------- **" + emptyline + emptyline, false);
-            LFGemb.AddField("**Donnerstag**", Donnerstag, false);
-
-            return LFGemb;
-        }
-
-        public void LeerenDi()
-        {
-            //reset Dienstag txt's
-            File.WriteAllText(@"dienstagexp.txt", "\n**Exp**\n - \n - \n - \n - \n - \n - \n - \n");
-            File.WriteAllText(@"dienstaglvl2.txt", "\n**Trainee Lvl2**\n - \n");
-            File.WriteAllText(@"dienstaglvl1.txt", "\n**Trainee Lvl1**\n - \n");
-            File.WriteAllText(@"dienstaglvl0.txt", "\n**Trainee Lvl0**\n - \n");
-
-            //reset anmeldungs couter
-            _ = new RaidLFG
-            {
-                ExpDiAnm = 1,
-                Lvl2DiAnm = 1,
-                Lvl1DiAnm = 1,
-                Lvl0DiAnm = 1
-            };
-        }
-
-        public void LeerenDo()
-        {
-            //reset Donnerstag txt's
-            File.WriteAllText(@"donnerstagexp.txt", "\n**Exp**\n - \n - \n - \n - \n - \n - \n - \n - \n");
-            File.WriteAllText(@"donnerstaglvl2.txt", "\n**Trainee Lvl2**\n - \n - \n");
-
-            //reset anmeldungs counters
-            _ = new RaidLFG
-            {
-                ExpDoAnm = 1,
-                Lvl2DoAnm = 1
-            };
         }
     }
 }

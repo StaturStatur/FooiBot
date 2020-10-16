@@ -3,8 +3,6 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 using System;
-using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -55,35 +53,48 @@ namespace FooiBot.Commands
             DiLFGLvl2 = "**Trainee Level 2** (" + (Lvl2DiAnm-1) + "/1 Lvl2-Anmeldungen) \n\u200B";
             DiLFGLvl1 = "**Trainee Level 2** (" + (Lvl1DiAnm-1) + "/1 Lvl1-Anmeldungen) \n\u200B";
             DiLFGLvl0 = "**Trainee Level 2** (" + (Lvl0DiAnm-1) + "/1 Lvl0-Anmeldungen) \n\u200B";
-
+            
+            j = 0;
             //build Ausgabesting
-            for (int i = 0; i < ExpDiAnm || i < 7; i++)
+            for (int i = 0; i < ExpDiAnm || i < 7; i++, j++)
                 if (DiExp[2, i] == null)
                     DiLFGExp += " - \n";
                 else
                     DiLFGExp += Emojichooser(ctx, DiExp[2, i]) + Emojichooser(ctx, DiExp[1, i]) + DiExp[0, i] + "\n";
             DiLFGExp += "\n\u200B\n\u200B";
 
-            for (int i = 0; i < Lvl2DiAnm || i < 1; i++)
+            ExpDiAnm = j;
+            j = 0;
+
+            for (int i = 0; i < Lvl2DiAnm || i < 1; i++, j++)
                 if (DiLvl2[2, i] == null)
                     DiLFGLvl2 += " - \n";
                 else
                     DiLFGLvl2 += Emojichooser(ctx, DiExp[2, i]) + Emojichooser(ctx, DiExp[1, i]) + DiExp[0, i] + "\n";
             DiLFGLvl2 += "\n\u200B\n\u200B";
 
-            for (int i = 0; i < Lvl1DiAnm || i < 1; i++)
+            Lvl2DiAnm = j;
+            j = 0;
+
+            for (int i = 0; i < Lvl1DiAnm || i < 1; i++, j++)
                 if (DiLvl1[2, i] == null)
                     DiLFGLvl1 += " - \n";
                 else
                     DiLFGLvl1 += Emojichooser(ctx, DiExp[2, i]) + Emojichooser(ctx, DiExp[1, i]) + DiExp[0, i] + "\n";
             DiLFGLvl1 += "\n\u200B\n\u200B";
 
-            for (int i = 0; i < Lvl0DiAnm || i < 1; i++)
+            Lvl1DiAnm = j;
+            j = 0;
+
+            for (int i = 0; i < Lvl0DiAnm || i < 1; i++, j++)
                 if (DiLvl0[2, i] == null)
                     DiLFGLvl0 += " - \n";
                 else
                     DiLFGLvl0 += Emojichooser(ctx, DiExp[2, i]) + Emojichooser(ctx, DiExp[1, i]) + DiExp[0, i] + "\n";
             DiLFGLvl0 += "\n\u200B\n\u200B";
+
+            Lvl0DiAnm = j;
+            j = 0;
 
             DiLFG = DiLFGExp + DiLFGLvl2 + DiLFGLvl1 + DiLFGLvl0;
             return DiLFG;
@@ -111,20 +122,27 @@ namespace FooiBot.Commands
             DoLFGExp = "**Exp** (" + (ExpDoAnm-1) + "/8 Exp-Anmeldungen) \n\u200B";
             DoLFGLvl2 = "**Trainee Level 2** (" + (Lvl2DiAnm-1) + "/2 Lvl2-Anmeldungen) \n\u200B";
 
+            j = 0;
             //build Ausgabesting
-            for (int i = 0; i < ExpDoAnm || i < 8; i++)
+            for (int i = 0; i < ExpDoAnm || i < 8; i++, j++)
                 if (DoExp[2, i] == null)
                     DoLFGExp += " - \n";
                 else
                     DoLFGExp += Emojichooser(ctx, DoExp[2, i]) + Emojichooser(ctx, DoExp[1, i]) + DoExp[0, i] + "\n";
             DoLFGExp += "\n\u200B\n\u200B";
 
-            for (int i = 0; i < Lvl2DiAnm || i < 2; i++)
+            ExpDoAnm = j;
+            j = 0;
+
+            for (int i = 0; i < Lvl2DiAnm || i < 2; i++, j++)
                 if (DoLvl2[2, i] == null)
                     DoLFGLvl2 += " - \n";
                 else
                     DoLFGLvl2 += Emojichooser(ctx, DoExp[2, i]) + Emojichooser(ctx, DoExp[1, i]) + DoExp[0, i] + "\n";
             DoLFGLvl2 += "\n\u200B\n\u200B";
+
+            Lvl2DoAnm = j;
+            j = 0;
 
             DoLFG = DoLFGExp + DoLFGLvl2;
             return DoLFG;
@@ -679,7 +697,7 @@ namespace FooiBot.Commands
 
         [Command("empty")]
         [Description("Deletes all Players from specified Raid (\"Di\"/\"Do\")")]
-        //[RequireRoles(RoleCheckMode.Any, "FooiBotMod")]
+        //[RequireRoles(RoleCheckMode.All, "FooiBotMod")]
         public async Task Delete(CommandContext ctx,
             [Description("Day on wich all Players are removed from the LFG(\"Di\"/\"Do\")")] string Tag)
         {
