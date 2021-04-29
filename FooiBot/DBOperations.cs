@@ -8,6 +8,7 @@ namespace FooiBot
 {
     class DBOperations : RaidLFG
     {
+
         public static void EinschreibenDi(string[] Anmeldung, CommandContext ctx)
         {
             int results;

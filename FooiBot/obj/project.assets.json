@@ -4390,20 +4390,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\amins\\.nuget\\packages\\": {}
+    "C:\\Users\\amins\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Programme\\FooiBot\\FooiBot\\FooiBot\\FooiBot.csproj",
+      "projectUniqueName": "A:\\Data\\alles in einem\\Programme\\FooiBot\\FooiBot\\FooiBot.csproj",
       "projectName": "FooiBot",
-      "projectPath": "D:\\Programme\\FooiBot\\FooiBot\\FooiBot\\FooiBot.csproj",
+      "projectPath": "A:\\Data\\alles in einem\\Programme\\FooiBot\\FooiBot\\FooiBot.csproj",
       "packagesPath": "C:\\Users\\amins\\.nuget\\packages\\",
-      "outputPath": "D:\\Programme\\FooiBot\\FooiBot\\FooiBot\\obj\\",
+      "outputPath": "A:\\Data\\alles in einem\\Programme\\FooiBot\\FooiBot\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "C:\\Users\\amins\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -4459,7 +4466,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

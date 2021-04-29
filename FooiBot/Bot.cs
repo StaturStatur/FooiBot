@@ -91,7 +91,7 @@ namespace FooiBot
         public async Task HearthBeatPoster(HeartbeatEventArgs e)
         {
             //di/do reset noch implementiere
-            RaidLFG raidLFG = new RaidLFG();
+            //RaidLFG raidLFG = new RaidLFG();
             var lfgchannel = await Client.GetChannelAsync(763993776246882314).ConfigureAwait(false);
 
             //wöchentlicher reset

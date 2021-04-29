@@ -10,6 +10,11 @@ namespace FooiBot.Commands
 {
     class UtilityCommands : BaseCommandModule
     {
+        /// <summary>
+        /// hier ist mein kommentar
+        /// </summary>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
         [Command("ping")]
         [Description("Returns Pong")]
         [RequireRoles(RoleCheckMode.All, "FooiBotMod")]
@@ -117,8 +122,6 @@ namespace FooiBot.Commands
             var results = distinctresult.Select(x => $"{x.Emoji}: {x.Total}");
 
             await ctx.Channel.SendMessageAsync(string.Join("\n", results)).ConfigureAwait(false);
-
-
         }
 
     }
